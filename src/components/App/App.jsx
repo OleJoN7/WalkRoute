@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import Header from '../Header';
-import Map from '../Map';
 import PathForm from '../PathForm';
 import RouteList from '../RouteList';
-import RouteItem from '../RouteItem';
-import SearchPanel from '../SearchPanel';
+import RouteItemDetails from '../RouteItemDetails';
 import './App.css';
 
 class App extends Component {
@@ -13,9 +11,28 @@ class App extends Component {
     this.state = {
       pathList:[],
       showForm:false,
-      showPathDetail:false
+      pathDetail:null,
+      search:''
     }
   }
+
+  onSearchChange = (e) => {
+    this.setState({
+      search:e.target.value.trim()
+    })
+  }
+
+  searchItems(items,search) {
+    if(search.length === '') {
+        return items
+    }
+    return items.filter(item => {
+      const titleChecked = item.title.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+      const descriptionChecked = item.fullDescription.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+      return titleChecked || descriptionChecked
+    })
+  }
+
   onShowForm = () => {
     this.setState(({showForm}) => {
       return {
@@ -29,8 +46,9 @@ class App extends Component {
     let newItem = {
       title:newPath.title,
       shortDescription: newPath.shortDescription,
-      fullDescription:newPath.shortDescription,
+      fullDescription:newPath.fullDescription,
       pathLength: newPath.pathLength,
+      favourite:false,
       id:this.nextId++
     }
     this.setState(({pathList}) => {
@@ -40,19 +58,61 @@ class App extends Component {
         }
     })
   }
-  onPathDetails = (id) => {
-    console.log("Path id:",id)
+
+  onRouteDetails = (id) => {
+    const routeDetails = this.state.pathList.filter(item => {
+      return item.id === id
+    })
+    this.setState({
+      pathDetail:routeDetails[0]
+    })
   }
+
+  onRemove = (id) => {
+    const filtered = this.state.pathList.filter(item => item.id !== id)
+      this.setState({
+        pathList:filtered,
+        pathDetail:null
+      })
+  }
+
+  onFavourite = (id) => {
+    this.setState(({pathList}) => {
+      return pathList.filter(item => {
+        if(item.id === id) {
+          return Object.assign(item,{ 
+            favourite:!item.favourite
+          })
+        } else {
+          return false
+        } 
+      })
+    },() => console.log(this.state.pathList))
+  }
+  
   render() {
+    const {pathList,showForm,search,pathDetail} = this.state
+    const serchedItems = this.searchItems(pathList,search)
     return (
       <div className="App">
         <Header onShowForm={this.onShowForm}/>
-        <Map/>
-        <RouteList onPathDetails={this.onPathDetails} routes={this.state.pathList}/>
-        <RouteItem/>
-        <SearchPanel/>
+        <RouteList 
+          onSearchChange={this.onSearchChange}
+          state={search}
+          onRouteDetails={this.onRouteDetails} 
+          routes={serchedItems}
+        />
         {
-          this.state.showForm 
+          pathDetail
+          ? <RouteItemDetails 
+              pathDetail={pathDetail}
+              onRemove={this.onRemove}
+              onFavourite={this.onFavourite}
+            />
+          : null
+        }
+        {
+          showForm 
           ? <PathForm onAddPath={this.onAddPath} showForm={this.onShowForm}/>
           : null
         }

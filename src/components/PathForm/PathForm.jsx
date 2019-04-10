@@ -13,34 +13,31 @@ class PathForm extends React.Component {
             pathLength:null
         }
     }
+
     onTitleChange = (e) => {
         this.setState({
             title:e.target.value
-        },() => {
-            console.log(this.state.title)
         })
     }
+
     onShortDescChange = (e) => {
         this.setState({
             shortDescription:e.target.value
-        },() => {
-            console.log(this.state.shortDescription)
         })
     }
+
     onFullDescChange = (e) => {
         this.setState({
             fullDescription:e.target.value
-        },() => {
-            console.log(this.state.fullDescription)
         })
     }
+    
     onSubmitForm = (e) => {
         e.preventDefault();
         this.props.showForm();
         if(this.state.title === ''
         || this.state.shortDescription === ''
         || this.state.fullDescription === '') {
-            console.log("Type descriptions")
             return false
         }
         this.props.onAddPath(this.state);
@@ -49,7 +46,6 @@ class PathForm extends React.Component {
             shortDescription:'',
             fullDescription:''
         })
-        console.log("form submitted")
     }
 
     render() {
