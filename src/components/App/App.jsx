@@ -8,16 +8,54 @@ import SearchPanel from '../SearchPanel';
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      pathList:[],
+      showForm:false,
+      showPathDetail:false
+    }
+  }
+  onShowForm = () => {
+    this.setState(({showForm}) => {
+      return {
+        showForm:!showForm
+      }
+    })
+  }
+
+  nextId = 0;
+  onAddPath = (newPath) => {
+    let newItem = {
+      title:newPath.title,
+      shortDescription: newPath.shortDescription,
+      fullDescription:newPath.shortDescription,
+      pathLength: newPath.pathLength,
+      id:this.nextId++
+    }
+    this.setState(({pathList}) => {
+        let addItem = [...pathList,newItem];
+        return {
+          pathList:addItem
+        }
+    })
+  }
+  onPathDetails = (id) => {
+    console.log("Path id:",id)
+  }
   render() {
     return (
       <div className="App">
-        <h1>Test</h1>
-        <Header/>
+        <Header onShowForm={this.onShowForm}/>
         <Map/>
-        <PathForm/>
-        <RouteList/>
+        <RouteList onPathDetails={this.onPathDetails} routes={this.state.pathList}/>
         <RouteItem/>
         <SearchPanel/>
+        {
+          this.state.showForm 
+          ? <PathForm onAddPath={this.onAddPath} showForm={this.onShowForm}/>
+          : null
+        }
       </div>
     );
   }

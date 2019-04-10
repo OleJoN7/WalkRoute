@@ -1,11 +1,13 @@
 import React from 'react';
+import Button from '../Button';
 import './header.css'
 
-const Header = () => {
+const Header = ({onShowForm}) => {
     return (
-        <div>
-            Header
-        </div>
+        <header>
+            <h1>Saunter</h1>
+            <Button onClick={onShowForm}>Add Path</Button>
+        </header>
     )
 }
 
