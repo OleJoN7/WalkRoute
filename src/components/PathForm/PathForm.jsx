@@ -21,9 +21,11 @@ class PathForm extends React.Component {
     }
 
     onShortDescChange = (e) => {
-        this.setState({
-            shortDescription:e.target.value
-        })
+        if(e.target.value.length < 160) {
+            this.setState({
+                shortDescription:e.target.value
+            })
+        } 
     }
 
     onFullDescChange = (e) => {
@@ -31,7 +33,7 @@ class PathForm extends React.Component {
             fullDescription:e.target.value
         })
     }
-    
+
     onSubmitForm = (e) => {
         e.preventDefault();
         this.props.showForm();

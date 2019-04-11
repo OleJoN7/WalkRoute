@@ -3,6 +3,7 @@ import Header from '../Header';
 import PathForm from '../PathForm';
 import RouteList from '../RouteList';
 import RouteItemDetails from '../RouteItemDetails';
+import {firestore} from '../../firebase';
 import './App.css';
 
 class App extends Component {
@@ -12,8 +13,18 @@ class App extends Component {
       pathList:[],
       showForm:false,
       pathDetail:null,
-      search:''
+      search:'',
+      posts:[]
     }
+  }
+  componentDidMount = async () => {
+    const snapshot = await firestore.collection("posts").get();
+    const posts = snapshot.docs.map(doc => {
+      return {id:doc.id,...doc.data()}
+    })
+    this.setState({
+      pathList:posts  
+    })
   }
 
   onSearchChange = (e) => {
@@ -41,18 +52,19 @@ class App extends Component {
     })
   }
 
-  nextId = 0;
-  onAddPath = (newPath) => {
+  onAddPath = async (newPath) => {
     let newItem = {
       title:newPath.title,
       shortDescription: newPath.shortDescription,
       fullDescription:newPath.fullDescription,
       pathLength: newPath.pathLength,
-      favourite:false,
-      id:this.nextId++
+      favourite:false
     }
+    const documentLocationInDb = await firestore.collection('posts').add(newItem);
+    const doc = await documentLocationInDb.get();
+    const newPost =  {id:doc.id,...doc.data()}
     this.setState(({pathList}) => {
-        let addItem = [...pathList,newItem];
+        let addItem = [...pathList,newPost];
         return {
           pathList:addItem
         }
@@ -68,7 +80,8 @@ class App extends Component {
     })
   }
 
-  onRemove = (id) => {
+  onRemove = async (id) => {
+    await firestore.doc(`posts/${id}`).delete()
     const filtered = this.state.pathList.filter(item => item.id !== id)
       this.setState({
         pathList:filtered,
@@ -89,9 +102,11 @@ class App extends Component {
       })
     },() => console.log(this.state.pathList))
   }
-  
+
   render() {
     const {pathList,showForm,search,pathDetail} = this.state
+    console.log(pathList)
+  
     const serchedItems = this.searchItems(pathList,search)
     return (
       <div className="App">
