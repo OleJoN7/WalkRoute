@@ -1,7 +1,8 @@
 import React from 'react';
 import Button from '../Button';
-
+import GoogleMap from '../GoogleMap';
 import './pathform.css';
+
 
 class PathForm extends React.Component {
     constructor(props) {
@@ -76,6 +77,11 @@ class PathForm extends React.Component {
                         type="submit">Add new Path
                     </Button>
                 </form>
+                <div className="map-wrapper">
+                    <GoogleMap 
+                    apiKey="AIzaSyCKXnyg0erUqCbgTge4fOO2vifuPdMQGEg" 
+                    libraries={['geometry']} />
+                </div>
             </div>
         )
     }

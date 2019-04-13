@@ -10,7 +10,7 @@
     background: rgba(0,0,0, 0.5);
 }
 .main-form {
-    position: absolute;
+    /* position: absolute; */
     left: 25%;
     right: 25%;
     top: 25%;

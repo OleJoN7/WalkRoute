@@ -17,6 +17,7 @@ class App extends Component {
       posts:[]
     }
   }
+
   componentDidMount = async () => {
     const snapshot = await firestore.collection("posts").get();
     const posts = snapshot.docs.map(doc => {
@@ -89,7 +90,7 @@ class App extends Component {
       })
   }
 
-  onFavourite = (id) => {
+  onFavourite = async (id) => {
     this.setState(({pathList}) => {
       return pathList.filter(item => {
         if(item.id === id) {
@@ -100,13 +101,11 @@ class App extends Component {
           return false
         } 
       })
-    },() => console.log(this.state.pathList))
+    })
   }
 
   render() {
     const {pathList,showForm,search,pathDetail} = this.state
-    console.log(pathList)
-  
     const serchedItems = this.searchItems(pathList,search)
     return (
       <div className="App">
