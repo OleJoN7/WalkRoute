@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../Button';
-import GoogleMap from '../GoogleMap';
+import GoogleMapCreatePath from '../GoogleMapCreatePath';
 import './pathform.css';
 
 
@@ -11,8 +11,12 @@ class PathForm extends React.Component {
             title:'',
             shortDescription:'',
             fullDescription:'',
-            pathLength:null
+            map: null
         }
+    }
+
+    onMapChange = (map) => {
+        this.setState({map})
     }
 
     onTitleChange = (e) => {
@@ -40,14 +44,16 @@ class PathForm extends React.Component {
         this.props.showForm();
         if(this.state.title === ''
         || this.state.shortDescription === ''
-        || this.state.fullDescription === '') {
+        || this.state.fullDescription === ''
+        || this.state.map === null) {
             return false
         }
         this.props.onAddPath(this.state);
         this.setState({
             title:'',
             shortDescription:'',
-            fullDescription:''
+            fullDescription:'',
+            map:null
         })
     }
 
@@ -78,9 +84,11 @@ class PathForm extends React.Component {
                     </Button>
                 </form>
                 <div className="map-wrapper">
-                    <GoogleMap 
-                    apiKey="AIzaSyCKXnyg0erUqCbgTge4fOO2vifuPdMQGEg" 
-                    libraries={['geometry']} />
+                    <GoogleMapCreatePath 
+                        onMapChange={this.onMapChange}
+                        apiKey="AIzaSyCKXnyg0erUqCbgTge4fOO2vifuPdMQGEg" 
+                        libraries={['geometry']} 
+                    />
                 </div>
             </div>
         )

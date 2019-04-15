@@ -12,9 +12,9 @@ class App extends Component {
     this.state = {
       pathList:[],
       showForm:false,
+      sort:false,
       pathDetail:null,
-      search:'',
-      posts:[]
+      search:''
     }
   }
 
@@ -54,12 +54,19 @@ class App extends Component {
   }
 
   onAddPath = async (newPath) => {
+    const coordinates = newPath.map.markers.map(obj => {
+      return {
+        lat:obj.lat(),
+        lng:obj.lng()
+      }
+    })
     let newItem = {
       title:newPath.title,
       shortDescription: newPath.shortDescription,
       fullDescription:newPath.fullDescription,
-      pathLength: newPath.pathLength,
-      favourite:false
+      favourite:false,
+      coordinates,
+      distance:newPath.map.distance
     }
     const documentLocationInDb = await firestore.collection('posts').add(newItem);
     const doc = await documentLocationInDb.get();
@@ -90,9 +97,9 @@ class App extends Component {
       })
   }
 
-  onFavourite = async (id) => {
-    this.setState(({pathList}) => {
-      return pathList.filter(item => {
+  onFavourite = (id) => {
+    this.setState(({pathList,sort}) => {
+      pathList.filter(item => {
         if(item.id === id) {
           return Object.assign(item,{ 
             favourite:!item.favourite
@@ -101,11 +108,14 @@ class App extends Component {
           return false
         } 
       })
+      return {
+        sort:!sort
+      }
     })
   }
 
   render() {
-    const {pathList,showForm,search,pathDetail} = this.state
+    const {pathList,showForm,search,pathDetail} = this.state;
     const serchedItems = this.searchItems(pathList,search)
     return (
       <div className="App">
@@ -119,6 +129,7 @@ class App extends Component {
         {
           pathDetail
           ? <RouteItemDetails 
+              pathList={pathList}
               pathDetail={pathDetail}
               onRemove={this.onRemove}
               onFavourite={this.onFavourite}
@@ -127,7 +138,11 @@ class App extends Component {
         }
         {
           showForm 
-          ? <PathForm onAddPath={this.onAddPath} showForm={this.onShowForm}/>
+          ? <PathForm 
+              onAddPath={this.onAddPath} 
+              showForm={this.onShowForm}
+              whichMap={this.state.showForm}
+            />
           : null
         }
       </div>

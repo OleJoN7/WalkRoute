@@ -12,10 +12,10 @@ const RouteList = ({routes,showPathDetail,...props}) => {
               state={props.state}
             />
             <ul>
-                {   
+                {  
                     sortedRoutes.length > 0
                     ? sortedRoutes.map(item => {
-                        const {title,shortDescription,fullDescription,pathLength,id} = item;
+                        const {title,shortDescription,fullDescription,distance,id} = item;
                         return(
                             <li key={id}>
                             <RouteItem 
@@ -23,7 +23,7 @@ const RouteList = ({routes,showPathDetail,...props}) => {
                                 title={title} 
                                 shortDescription={shortDescription}  
                                 id={id}
-                                pathLength={pathLength}
+                                distance={distance}
                                 fullDescription={fullDescription}  
                             />
                             </li>
