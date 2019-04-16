@@ -1,0 +1,21 @@
+.map-container {
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+.fav-btn {
+    border:none;
+    color:rgb(37, 139, 223);
+    background: transparent;
+    cursor: pointer;
+    text-decoration: underline
+}
+.rem-btn {
+    border:none;
+    color:rgb(230, 51, 39);
+    background: transparent;
+    cursor: pointer;
+    text-decoration: underline
+}

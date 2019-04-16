@@ -7,14 +7,41 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    background: rgba(0,0,0, 0.5);
+    background: rgba(20, 19, 19, 0.9);
+    padding-top:40px;
 }
-.main-form {
-    /* position: absolute; */
-    left: 25%;
-    right: 25%;
-    top: 25%;
-    bottom: 25%;
-    margin: auto;
-    background: white;
-  }
+.close-btn {
+    cursor:pointer;
+    background:transparent;
+    border:none;
+}
+.fa-window-close {
+    font-size:20px;
+    color:rgb(219, 115, 45);
+}
+.close-btn-wrapper{
+    position: absolute;
+    top:0;
+    left:50%;
+    transform: translate(-50%)
+}
+.map-wrapper {
+    position: relative;
+    height:400px;
+    width:100%;
+}
+.main-form .form-control {
+    margin-bottom:20px;
+}
+textarea.form-control {
+    height:120px;
+}
+.distance-addpath {
+    color:#fff;
+    font-size:20px;
+    text-align: center;
+}
+.btn-outline-primary {
+    color:rgb(219, 115, 45);
+    border-color:rgb(219, 115, 45);
+}

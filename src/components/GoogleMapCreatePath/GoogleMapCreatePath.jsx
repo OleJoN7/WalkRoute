@@ -44,7 +44,7 @@ class GoogleMapCreatePath extends React.Component {
   
   render() {
     const style = {
-      width: '300px',
+      width: '100%',
       height: '100%'
     }
     return (

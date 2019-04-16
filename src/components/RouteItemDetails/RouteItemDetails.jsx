@@ -13,21 +13,31 @@ const RouteItemDetails = ({pathDetail,onFavourite,onRemove,pathList}) => {
         postRef.update({favourite:!favourite})
     }
     return (
-        <div>
-            <header>
-                <h3>{title}</h3>
-                <p>{distance}</p>
+        <div className="d-flex flex-column">
+            <header className="d-flex justify-content-between">
+                <h3 style={{textTransform:"capitalize"}}>{title}</h3>
+                <p><span className="bold">{distance}</span> km</p>
             </header>
             <p>{fullDescription}</p>
-            <Button onClick={handleFavDb}>Add to favourite</Button>
-            <Button onClick={() => onRemove(id)}>Remove</Button>
-            <GoogleMapPath  
-                apiKey="AIzaSyCKXnyg0erUqCbgTge4fOO2vifuPdMQGEg" 
-                libraries={['geometry']} 
-                coordinates={coordinates}
-                pathList={pathList}
-                id={id}
-            />
+            <div style={{position:'relative',width:"100%",height:"300px",marginBottom:'1rem'}}>
+                <div className="map-container">
+                    <GoogleMapPath  
+                        apiKey="AIzaSyCKXnyg0erUqCbgTge4fOO2vifuPdMQGEg" 
+                        libraries={['geometry']} 
+                        coordinates={coordinates}
+                        pathList={pathList}
+                        id={id}
+                    />
+                </div>
+            </div>
+            <div className="d-flex flex-column align-items-end">
+                <div style={{marginBottom:'10px'}}>
+                    <Button className="fav-btn" onClick={handleFavDb}>Add to favourite</Button>
+                </div>
+                <div>
+                    <Button className="rem-btn" onClick={() => onRemove(id)}>Remove</Button>
+                </div>
+            </div>
         </div>
     )
 }

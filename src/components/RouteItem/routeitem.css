@@ -1,0 +1,33 @@
+.star:before {
+    font-family: FontAwesome; 
+    content:"\f005";
+    color:rgb(115, 190, 224);
+    font-size:20px;
+    margin-right:5px;
+}
+.item-title {
+    text-transform: capitalize;
+    margin:0;
+}
+.short-description {
+    white-space: initial;
+    font-size:14px;
+    color:rgb(158, 156, 156)
+}
+.distance-wrap {
+    position: relative;
+    margin-right:5px;
+}
+.arrow:before {
+    font-family: FontAwesome; 
+    content:"\f061";
+    position: absolute;
+    right:-20px;
+}
+.fa-arrows-alt {
+    color:rgb(158, 156, 156);
+    font-size:30px;
+}
+.active {
+    color:red
+}

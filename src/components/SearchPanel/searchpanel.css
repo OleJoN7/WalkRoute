@@ -1,0 +1,13 @@
+.search-wrapper {
+    position: relative;
+    margin-bottom:20px;
+}
+.search-icon-wrapper {
+    position:absolute;
+    top: 20%;
+    right: 5%;
+}
+.fa-search {
+    color:rgb(124, 121, 121);
+    font-size:20px;
+}

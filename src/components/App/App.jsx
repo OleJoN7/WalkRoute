@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import PathForm from '../PathForm';
 import RouteList from '../RouteList';
-import RouteItemDetails from '../RouteItemDetails';
 import {firestore} from '../../firebase';
 import './App.css';
 
@@ -118,24 +117,18 @@ class App extends Component {
     const {pathList,showForm,search,pathDetail} = this.state;
     const serchedItems = this.searchItems(pathList,search)
     return (
-      <div className="App">
+      <div className="jumbotron app-container">
         <Header onShowForm={this.onShowForm}/>
         <RouteList 
+          pathList={pathList}
+          pathDetail={pathDetail}
           onSearchChange={this.onSearchChange}
           state={search}
           onRouteDetails={this.onRouteDetails} 
           routes={serchedItems}
+          onRemove={this.onRemove}
+          onFavourite={this.onFavourite}
         />
-        {
-          pathDetail
-          ? <RouteItemDetails 
-              pathList={pathList}
-              pathDetail={pathDetail}
-              onRemove={this.onRemove}
-              onFavourite={this.onFavourite}
-            />
-          : null
-        }
         {
           showForm 
           ? <PathForm 

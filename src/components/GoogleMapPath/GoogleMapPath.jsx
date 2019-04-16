@@ -23,19 +23,19 @@ class GoogleMapPath extends React.Component {
   
   render() {
     const style = {
-      width: '300px',
+      width: '100%',
       height: '100%'
     }
     return this.props.pathList.map(item => {
       if(item.id === this.props.id) {
         return (
-          <Map key={item.id}
-            initialCenter = {{lat:49.444431,lng:32.059769}}
-            style={style}
-            google={this.props.google} 
-            zoom={18}
-            onReady={this.onMapLoaded}
-          /> 
+            <Map key={item.id}
+              initialCenter = {{lat:49.444431,lng:32.059769}}
+              style={style}
+              google={this.props.google} 
+              zoom={18}
+              onReady={this.onMapLoaded}
+            /> 
         );
       } else {
         return null
@@ -46,7 +46,7 @@ class GoogleMapPath extends React.Component {
 export default GoogleApiWrapper(
   (props) => ({
     apiKey: props.apiKey,
-    libraries: props.libraries,
+    libraries: props.libraries
   }
 ))(GoogleMapPath)
   
